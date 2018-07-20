@@ -2,10 +2,10 @@
 \alias{fitENIGMA}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Estimation of unigram models for metagenome analysis
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Estimate the parameteres regressive unigram mixtutre model using Laplace approximation.
 }
 \usage{
 fitENIGMA(Y, formula = NULL, X = NULL, L = 2, alpha = NULL, data = NULL, ...)
@@ -13,42 +13,45 @@ fitENIGMA(Y, formula = NULL, X = NULL, L = 2, alpha = NULL, data = NULL, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{Y}{
-%%     ~~Describe \code{Y} here~~
+Matrix of multinomial response.
 }
   \item{formula}{
-%%     ~~Describe \code{formula} here~~
+Formula of linear predictor.
 }
   \item{X}{
-%%     ~~Describe \code{X} here~~
+Design matrix (instead of formula).
 }
   \item{L}{
-%%     ~~Describe \code{L} here~~
+Number of components (Numeber of cluster).
 }
   \item{alpha}{
-%%     ~~Describe \code{alpha} here~~
+Hyperparameters of dirichlet prior (default 1)
 }
   \item{data}{
-%%     ~~Describe \code{data} here~~
+An optional data frame which containing the variables in the model.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+additional arguments to be passed to optimizing function in rstan.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+
+\item{pi }{mixting ratio}
+\item{beta }{regression coefficients}
+\item{gamma }{The baseline parameter (intercept) which allowed change by clusters}
+\item{sigma }{The hyperparameter of beta}
+\item{tau }{The hyper parameter of gamma}
+\item{cate }{The probability which a sample belong each class}
+\item{Xbeta }{The linear predictor}
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Ko ABE
 }
 \note{
 %%  ~~further notes~~
@@ -60,27 +63,27 @@ fitENIGMA(Y, formula = NULL, X = NULL, L = 2, alpha = NULL, data = NULL, ...)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+softmax <-function(x){
+  tmp = max(x)
+  return(exp(x-tmp)/sum(exp(x-tmp)))
+}
 
-## The function is currently defined as
-function (Y, formula = NULL, X = NULL, L = 2, alpha = NULL, data = NULL, 
-    ...) 
-{
-    if (is.null(X)) {
-        X <- model.matrix(formula, data = data)
-    }
-    if (is.null(alpha)) {
-        alpha = rep(1, L)
-    }
-    dat4stan <- list(N = nrow(Y), K = ncol(Y), D = ncol(X), L = L, 
-        y = Y, X = X, alpha = alpha)
-    rstan::optimizing(stanmodels$softmaxreg, dat4stan, as_vector = FALSE, 
-        hessian = TRUE, ...)
-  }
+# generate synthetic data
+N <- 100
+L <- 3
+K <- 100
+set.seed(1234)
+gamma <- matrix(rnorm(L*K),L,K)
+beta <- rnorm(K)
+X <- matrix(rbinom(N,1,0.5))
+z <-sample.int(L,N,replace = TRUE)
+p <-t(apply(gamma[z,] + (X %*% beta),1,softmax))
+y <-t(apply(p,1,function(x)rmultinom(1,2000,x)))
+
+fit <- fitENIGMA(y,X=X,L = 3)
+plot(beta,fit$par$beta)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+%\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
+%\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

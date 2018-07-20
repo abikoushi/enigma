@@ -2,10 +2,10 @@
 \alias{calcEvidence}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Calculate marginal likelihood from an object made by fitENIGMA.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Calculate marginal likelihood using Laplace approximation
 }
 \usage{
 calcEvidence(fit)
@@ -13,7 +13,7 @@ calcEvidence(fit)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{fit}{
-%%     ~~Describe \code{fit} here~~
+enter the object made by the function fitENIGMA.
 }
 }
 \details{
@@ -42,20 +42,24 @@ calcEvidence(fit)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (fit) 
-{
-    d0 <- length(fit$par$pi) + length(fit$par$beta) + length(fit$par$gamma) + 
-        length(fit$par$sigma) + length(fit$par$tau)
-    ldet0 <- determinant(fit$hessian)
-    fit$value + d0 * log(2 * pi) - ldet0$sign * ldet0$modulus[1]/2
-  }
+softmax <-function(x){
+  tmp = max(x)
+  return(exp(x-tmp)/sum(exp(x-tmp)))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+# generate synthetic data
+N <- 100
+L <- 3
+K <- 100
+set.seed(1234)
+gamma <- matrix(rnorm(L*K),L,K)
+beta <- rnorm(K)
+X <- matrix(rbinom(N,1,0.5))
+z <-sample.int(L,N,replace = TRUE)
+p <-t(apply(gamma[z,] + (X %*% beta),1,softmax))
+y <-t(apply(p,1,function(x)rmultinom(1,2000,x)))
+
+fit <- fitENIGMA(y,X=X,L = 3)
+calcEvidence(fit)
+}
+
