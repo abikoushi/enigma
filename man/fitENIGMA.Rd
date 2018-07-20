@@ -77,7 +77,7 @@ gamma <- matrix(rnorm(L*K),L,K)
 beta <- rnorm(K)
 X <- matrix(rbinom(N,1,0.5))
 z <-sample.int(L,N,replace = TRUE)
-p <-t(apply(gamma[z,] + (X %*% beta),1,softmax))
+p <-t(apply(gamma[z,] + (X \%*\% beta),1,softmax))
 y <-t(apply(p,1,function(x)rmultinom(1,2000,x)))
 
 fit <- fitENIGMA(y,X=X,L = 3)
