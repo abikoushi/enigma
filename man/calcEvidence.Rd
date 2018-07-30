@@ -19,7 +19,7 @@ enter the object made by the function fitENIGMA.
 A numeric value with the corresponding marginal likelihood.
 }
 \references{
-
+Ko Abe, Masaaki Hirayama, Kinji Ohno, and Teppei Shimamura, An Enterotype-like Unigram Class Model for Identifying Microbial Associations with Diseases, submitted.
 }
 \author{
 Ko ABE

@@ -33,10 +33,6 @@ An optional data frame which containing the variables in the model.
   \item{\dots}{
 additional arguments to be passed to optimizing function in rstan.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 
 \item{pi }{mixting ratio}
@@ -48,13 +44,10 @@ additional arguments to be passed to optimizing function in rstan.
 \item{Xbeta }{The linear predictor}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Ko Abe, Masaaki Hirayama, Kinji Ohno, and Teppei Shimamura, An Enterotype-like Unigram Class Model for Identifying Microbial Associations with Diseases, submitted.
 }
 \author{
 Ko ABE
-}
-\note{
-%%  ~~further notes~~
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

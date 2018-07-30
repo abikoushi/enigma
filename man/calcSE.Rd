@@ -21,6 +21,7 @@ A numeric vector with the parameteres standard error.
 }
 \references{
 %% ~put references to the literature/web site here ~
+Ko Abe, Masaaki Hirayama, Kinji Ohno, and Teppei Shimamura, An Enterotype-like Unigram Class Model for Identifying Microbial Associations with Diseases, submitted.
 }
 \author{
 Ko ABE

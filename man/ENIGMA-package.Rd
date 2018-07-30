@@ -6,7 +6,7 @@
 \alias{ENIGMA}
 \title{The 'ENIGMA' package.}
 \description{
-An enterotype-like unigram class model for identifying microbial associations.
+An enterotype-like unigram class model for identifying microbial associations
 }
 \references{
 Stan Development Team (2018). RStan: the R interface to Stan. R package version 2.17.3. http://mc-stan.org
