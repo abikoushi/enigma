@@ -15,6 +15,7 @@ calcEvidence(fit)
   \item{fit}{
 enter the object made by the function fitENIGMA.
 }
+}
 \value{
 A numeric value with the corresponding marginal likelihood.
 }

@@ -33,6 +33,7 @@ An optional data frame which containing the variables in the model.
   \item{\dots}{
 additional arguments to be passed to optimizing function in rstan.
 }
+}
 \value{
 
 \item{pi }{mixting ratio}
