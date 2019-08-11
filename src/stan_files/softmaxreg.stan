@@ -20,7 +20,7 @@ transformed parameters{
 }
 model{
   for(d in 1:D){
-   target += normal_lpdf(beta[d,]|0,sigma); 
+   target += normal_lpdf(beta[d,]|0,sigma);
   }
   for(l in 1:L){
     target += normal_lpdf(gamma[,l]|0,tau);
@@ -29,7 +29,7 @@ model{
   for(n in 1:N){
     vector[L] lp;
     for(l in 1:L){
-      lp[l] = log(pi[l]) + multinomial_lpmf(y[n,]|softmax(gamma[,l]+Xbeta[n,]')); 
+      lp[l] = log(pi[l]) + multinomial_lpmf(y[n,]|softmax(gamma[,l]+Xbeta[n,]'));
     }
     target += log_sum_exp(lp);
   }
@@ -39,7 +39,7 @@ generated quantities{
   for(n in 1:N){
     vector[L] lp;
     for(l in 1:L){
-      lp[l] = categorical_lpmf(l|pi) + multinomial_lpmf(y[n,]|softmax(gamma[,l]+Xbeta[n,]')); 
+      lp[l] = categorical_lpmf(l|pi) + multinomial_lpmf(y[n,]|softmax(gamma[,l]+Xbeta[n,]'));
     }
     cate[n] = softmax(lp);
   }

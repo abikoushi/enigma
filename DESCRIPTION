@@ -1,8 +1,9 @@
 Package: ENIGMA
 Version: 0.0.0.9000
-Title: What the Package Does (One Line, Title Case)
-Description: What the package does (one paragraph).
-Authors@R: person("First", "Last", , "first.last@example.com", c("aut", "cre"))
+Date: 2019-08-12
+Title: Enterotype-like Unigram Class Model
+Description: Estimation of Unigram Models for Metagenome nalysis.
+Authors@R: c(person(given ="Ko", family = "Abe", email = "ko.abe@med.nagoya-u.ac.jp", role = c("cre","aut")))
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
@@ -12,4 +13,4 @@ Imports: rstan (>= 2.17.3), rstantools (>= 1.5.0)
 LinkingTo: StanHeaders (>= 2.17.2), rstan (>= 2.17.3), BH (>= 1.66.0-1), Rcpp (>= 0.12.17), RcppEigen (>= 0.3.3.4.0)
 SystemRequirements: GNU make
 NeedsCompilation: yes
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
